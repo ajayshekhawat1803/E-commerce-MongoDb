@@ -1,0 +1,11 @@
+.all-products{
+    width: 400px;
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 30px;
+    border: 2px solid;
+    margin: auto;
+}
