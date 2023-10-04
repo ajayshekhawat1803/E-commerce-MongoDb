@@ -36,7 +36,7 @@ const AllProducts = () => {
             return (
               <div className='product' key={product._id}>
                 <div className="img-cont">
-                  <img src={"http://localhost:4000/" + product.imagepath.split("\\")[0] + "/" + product.imagepath.split("\\")[1]} alt="Not Loaded" />
+                  <img src={`http://localhost:4000/uploads/products/${product.image.filename}`} alt="Not Loaded" />
                 </div>
                 <div className='items'>
                   <h2 className='label'>Product:</h2>

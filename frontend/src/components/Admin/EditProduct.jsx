@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate,useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios';
 import './EditProduct.css'
 
@@ -9,26 +9,48 @@ const EditProduct = () => {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
+    const [image, setImage] = useState(null);
+    const [updatedimage, setupdatedImage] = useState(null);
     const [err, seterr] = useState(false);
     const navigate = useNavigate()
-    const params= useParams()
+    const params = useParams()
 
-    useEffect(()=>{
+    useEffect(() => {
         getProductDetails()
-    },[])
-    
-    const getProductDetails=async()=>{
+    }, [])
+
+    const getProductDetails = async () => {
         let result = await axios.get(`http://localhost:4000/product/edit/${params.id}`)
-        result=result.data
+        result = result.data
+        // console.log(result);
         setName(result.name)
         setPrice(result.price)
         setCategory(result.category)
         setCompany(result.company)
+        setImage(result.image)
     }
-
+    // console.log(image);
     const update = async () => {
-        let result = await axios.put(`http://localhost:4000/product/update/${params.id}`,{name,price,category,company})
-        console.log(result);
+        if (updatedimage) {
+            let result = await axios.put(`http://localhost:4000/product/update/${params.id}`, {
+                name: name,
+                price: price,
+                category: category,
+                company: company,
+                image: updatedimage
+            }, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+            console.log(result);
+        }
+        if (!updatedimage) {
+            const UpdatedData = { name, price, category, company, image }
+            let result = await axios.put(`http://localhost:4000/product/update/${params.id}`, UpdatedData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+            console.log(result);
+        }
+        alert("Product has been Updated")
         navigate("/allProducts")
     }
     return (
@@ -43,7 +65,13 @@ const EditProduct = () => {
 
             <input type="text" placeholder='Company of product' value={company} onChange={(e) => setCompany(e.target.value)} />
 
-            <button onClick={(e)=>{e.preventDefault();update()}}>Update</button>
+            <input type="file" onChange={(e) => {
+                setupdatedImage(e.target.files[0])
+            }} />
+
+            {/* <input type="hidden" value={image}/> */}
+
+            <button onClick={(e) => { e.preventDefault(); update() }}>Update</button>
         </div>
     )
 }

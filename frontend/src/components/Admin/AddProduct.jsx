@@ -25,8 +25,6 @@ const AddProduct = () => {
         },
       })
       result=result.data
-    // console.log(result);
-    // console.log(name, price, category, company, image);
     if (result.name) {
       alert("Product has been added")
       navigate("/allProducts")

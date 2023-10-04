@@ -11,7 +11,7 @@ productRouter.get("/", async (req, res) => {
 })
 
 const storage = multer.diskStorage({
-    destination: "uploads/",
+    destination: "uploads/products",
     filename: function (req, file, callback) {
         // Use the student's name as the filename and keep the original extension
         const ext = path.extname(file.originalname);
@@ -28,17 +28,16 @@ const upload = multer({ storage: storage });
 //     res.send("Post REQUEST IS RIUNNING");
 // })
 productRouter.post("/add", upload.single("image"), async (req, res) => {
-    const { name, price, category,company } = req.body;
+    const { name, price, category, company } = req.body;
     const image = req.file;
-    const imagepath = image.path;
-    let productToAdd = new productModel({ name, price, category, company,imagepath })
+    let productToAdd = new productModel({ name, price, category, company, image })
     let result = await productToAdd.save();
     res.json(result)
 })
 // To Delete
-productRouter.delete("/del/:id",async(req,res)=>{
-    const productToDeleteId= req.params.id;
-    let result = await productModel.deleteOne({_id:productToDeleteId})
+productRouter.delete("/del/:id", async (req, res) => {
+    const productToDeleteId = req.params.id;
+    let result = await productModel.deleteOne({ _id: productToDeleteId })
     res.json(result);
 })
 //To Update
@@ -50,11 +49,23 @@ productRouter.get("/edit/:id", async (req, res) => {
         res.send({ Result: "NO Product Found" })
     }
 })
-productRouter.put("/update/:id", async (req, res) => {
+// productRouter.put("/update/:id", async (req, res) => {
+//     let result = await productModel.updateOne(
+//         { _id: req.params.id },
+//         {
+//             $set: req.body
+//         }
+//     )
+//     res.json(result)
+// })
+productRouter.put("/update/:id", upload.single("image"), async (req, res) => {
+    const { name, price, category, company } = req.body
+    let image = req.file
+    const productToUpdate = { name, price, category, company, image }
     let result = await productModel.updateOne(
         { _id: req.params.id },
         {
-            $set: req.body
+            $set: productToUpdate
         }
     )
     res.json(result)
