@@ -1,0 +1,35 @@
+.add-product{
+    width: 400px;
+    padding: 30px ;
+    /* background-color: blue; */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px red,0px 0px 10px blue;
+    gap: 30px;
+}
+.add-product form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+.add-product form input{
+    padding: 10px;
+    border-radius: 4px;
+    outline: none;
+}
+
+#addProductBtn{
+    width: 40%;
+    padding: 11px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: blue;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+}

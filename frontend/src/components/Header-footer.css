@@ -11,3 +11,7 @@ header a{
     color: #fff;
     text-decoration: none;
 }
+#loggername{
+    font-weight: 700;
+    color: rgb(86, 247, 86);
+}

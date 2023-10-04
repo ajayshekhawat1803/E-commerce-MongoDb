@@ -35,5 +35,28 @@ productRouter.post("/add", upload.single("image"), async (req, res) => {
     let result = await productToAdd.save();
     res.json(result)
 })
-
+// To Delete
+productRouter.delete("/del/:id",async(req,res)=>{
+    const productToDeleteId= req.params.id;
+    let result = await productModel.deleteOne({_id:productToDeleteId})
+    res.json(result);
+})
+//To Update
+productRouter.get("/edit/:id", async (req, res) => {
+    let result = await productModel.findOne({ _id: req.params.id })
+    if (result) {
+        res.json(result)
+    } else {
+        res.send({ Result: "NO Product Found" })
+    }
+})
+productRouter.put("/update/:id", async (req, res) => {
+    let result = await productModel.updateOne(
+        { _id: req.params.id },
+        {
+            $set: req.body
+        }
+    )
+    res.json(result)
+})
 export default productRouter

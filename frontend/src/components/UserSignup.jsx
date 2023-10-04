@@ -22,8 +22,8 @@ const UserSignup = () => {
         // console.log(result);
         if (result.name) {
             alert("New User Registered")
-            localStorage.setItem("userData",result)
-            navigate("/")
+            // localStorage.setItem("userData",result)
+            navigate("/userLogin")
         }
     }
 
