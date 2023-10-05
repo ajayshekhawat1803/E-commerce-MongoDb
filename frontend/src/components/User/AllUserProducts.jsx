@@ -6,13 +6,16 @@ import { useNavigate } from 'react-router-dom'
 const AllUserProducts = () => {
     const [allproducts, setallproducts] = useState([])
     const navigate = useNavigate()
+
     useEffect(() => {
         getProducts();
     }, [])
+    
     const getProducts = async () => {
         let response = await axios.get("http://localhost:4000/product/")
         setallproducts(response.data);
     }
+
     return (
         <div className='allproducts'>
             <h1>All Products</h1>
@@ -22,7 +25,7 @@ const AllUserProducts = () => {
                         return (
                             <div className='product' key={product._id}>
                                 <div className="img-cont">
-                                    <img src={"http://localhost:4000/" + product.imagepath.split("\\")[0] + "/" + product.imagepath.split("\\")[1]} alt="Not Loaded" />
+                                    <img src={`http://localhost:4000/uploads/products/${product.image.filename}`} alt="Not Loaded" />
                                 </div>
                                 <div className='items'>
                                     <h2 className='label'>Product:</h2>

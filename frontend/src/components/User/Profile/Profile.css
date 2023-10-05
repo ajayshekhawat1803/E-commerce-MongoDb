@@ -1,0 +1,106 @@
+.profile {
+    width: 100%;
+    display: flex;
+    background-color: #f4f4f4;
+}
+
+.profile .left-panel {
+    border-right: 1px solid;
+    width: 300px;
+    min-height: 100%;
+    padding: 30px;
+}
+
+.profile .left-panel>h1 {
+    -webkit-text-stroke: 1px red;
+    margin-bottom: 20px;
+}
+
+.profile .left-panel .profile-nav a {
+    display: block;
+    color: blue;
+    font-weight: 800;
+    text-decoration: none;
+    margin-bottom: 10px;
+    background-color: rgb(201, 217, 243);
+    padding: 12px 15px;
+    border-radius: 7px;
+}
+
+/* right section  */
+
+.profile .right-panel {
+    flex: 1;
+    padding: 50px;
+    min-height: 84vh;
+    margin-top: 50px;
+    margin-right: 30px;
+    background-color: #fff;
+    margin-left: 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+.right-panel>h1{
+    margin-bottom: 40px;
+}
+.right-panel>h4{
+    font-size: 1.4rem;
+    border-bottom: 2px solid #aaa;
+    padding-bottom: 10px;
+}
+.right-panel .details-cont{
+    display: flex;
+    padding: 20px 0;
+    width: 100%;
+    gap: 20px;
+    flex-direction: column;
+}
+.right-panel .details-cont p{
+    /* width: 30%; */
+    margin-bottom: 30px;
+    font-size: 1.2rem ;
+}
+.right-panel .details-cont .details{
+    flex: 1;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.right-panel .details-cont .details .div{
+    margin-bottom: 15px ;
+    display: flex;
+    flex-direction: column;
+}
+.right-panel .details-cont .details .div h3{
+    min-width: 80px;
+    font-size: 1rem;
+    font-weight: 800;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+.right-panel .details-cont .details .div input{
+    padding: 13px 15px;
+    min-width: 280px;
+    text-overflow: ellipsis;
+    border: none;
+    outline: none;
+    background-color: #f4f6f8;
+    border-radius: 5px;
+    font-weight: 700;
+    border: 1px solid black;
+}
+.right-panel .details-cont .details .div a{
+    display: block;
+    /* margin-top: 10px; */
+    padding-top: 10px;
+}
+.right-panel button{
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    background-color: blue;
+    cursor: pointer;
+    border-radius: 8px;
+}

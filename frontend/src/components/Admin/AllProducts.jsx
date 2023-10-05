@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const AllProducts = () => {
   const [allproducts, setallproducts] = useState([])
   const navigate = useNavigate()
-
-
+  
   useEffect(() => {
     getProducts();
   }, [])
