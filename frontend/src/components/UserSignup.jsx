@@ -19,7 +19,7 @@ const UserSignup = () => {
         }
         let result =await axios.post("http://localhost:4000/user/register", userdetails)
         result=result.data
-        // console.log(result);
+        console.log(result);
         if (result.name) {
             alert("New User Registered")
             // localStorage.setItem("userData",result)

@@ -1,6 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const PersonalDetails = () => {
+    const [userAuth, setuserauth] = useState({})
+    const [name, setname] = useState("")
+    const [email, setemail] = useState("")
+    const [mobile, setmobile] = useState()
+    const [dob, setdob] = useState("")
+    const navigate = useNavigate()
+    useEffect(() => {
+        setuserauth(JSON.parse(localStorage.getItem("userData")))
+    }, [])
+    useEffect(() => {
+        setname(userAuth.name)
+        setemail(userAuth.email)
+        setdob(userAuth.dob)
+        setmobile(userAuth.mobile)
+    }, [userAuth])
+
+    const savePersonalDetails = async () => {
+        let result = await axios.patch(`http://localhost:4000/user/update/${userAuth._id}`, { name, email, mobile, dob })
+        result = result.data
+
+        let userUpdateddata = await axios.get(`http://localhost:4000/user/${userAuth._id}`)
+        localStorage.setItem("userData", JSON.stringify(userUpdateddata.data));
+        setuserauth(JSON.parse(localStorage.getItem("userData")))
+
+        if (result.modifiedCount) {
+            alert("Data Modified")
+            navigate("/profile/")
+        }
+    }
+
     return (
         <>
             <h1>Personal Details</h1>
@@ -11,23 +43,23 @@ const PersonalDetails = () => {
                 <div className="details">
                     <div className="div">
                         <h3>Name</h3>
-                        <input type="text" value={"Ajay Singh Shekhawat"}/>
+                        <input type="text" value={name} onChange={(e) => setname(e.target.value)} />
                     </div>
                     <div className="div">
                         <h3>DOB</h3>
-                        <input type="date" value={"2003-03-18"} />
+                        <input type="date" value={dob} onChange={(e) => setdob(e.target.value)} />
                     </div>
                     <div className="div">
                         <h3>Mobile</h3>
-                        <input type="number" value={"8949370123"} />
+                        <input type="number" value={mobile} onChange={(e) => setmobile(Number(e.target.value))} />
                     </div>
                     <div className="div">
                         <h3>Email</h3>
-                        <input type="email" value={"ajayshekhawat1803@gmail.com"} />
+                        <input type="email" value={email} onChange={(e) => setemail(e.target.value)} />
                     </div>
                 </div>
             </div>
-            <button>Save & Update</button>
+            <button onClick={savePersonalDetails}>Save & Update</button>
         </>
     )
 }
