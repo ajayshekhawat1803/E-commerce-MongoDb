@@ -25,10 +25,6 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: null
     },
-    // address: {
-    //     type: Object,
-    //     default: null
-    // }
     address: {
         addline1: {
             type: String,

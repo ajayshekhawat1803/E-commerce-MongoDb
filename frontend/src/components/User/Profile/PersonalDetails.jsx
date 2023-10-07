@@ -9,6 +9,7 @@ const PersonalDetails = () => {
     const [mobile, setmobile] = useState()
     const [dob, setdob] = useState("")
     const navigate = useNavigate()
+    
     useEffect(() => {
         setuserauth(JSON.parse(localStorage.getItem("userData")))
     }, [])

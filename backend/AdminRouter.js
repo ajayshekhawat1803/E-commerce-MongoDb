@@ -7,21 +7,18 @@ import { log } from "console";
 
 const AdminRouter = express.Router();
 
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 AdminRouter.post("/register", async (req, res) => {
     let { name, email, username, password } = req.body
-    let admintoRegister = new AdminModel({ name, email, username, password })
-    bcrypt.hash("password", 1, (err, hash) => {
+    bcrypt.hash(password, 10, async (err, hash) => {
         if (err) {
             console.error(err);
             return null
         }
         console.log(hash);
+        password = hash
+        let admintoRegister = new AdminModel({ name, email, username, password })
+        let result = await admintoRegister.save()
+        console.log(result);
     })
 })
 // console.log(admintoRegister);
@@ -36,20 +33,50 @@ AdminRouter.post("/register", async (req, res) => {
 //     res.json(result)
 // })
 
+
+
+
+
 AdminRouter.post("/login", async (req, res) => {
     if (req.body.username && req.body.password) {
-        let usertologin = await AdminModel.findOne(req.body).select("-password")
-
-        if (usertologin) {
-            res.send(usertologin)
-        } else {
-            res.send({ result: "no user found" })
+        let usertologin = await AdminModel.findOne({ username: req.body.username })
+        // console.log(usertologin);
+        bcrypt.compare(req.body.password, usertologin.password, (err, result) => {
+            if (err || !result) {
+                //   return res.status(401).json({ message: 'Authentication failed' });
+                console.log(err, result,"ifff wala h");
+            }
+            else {
+                console.log("Matched");
+            }
+        });
+        //     if (usertologin) {
+        //         res.send(usertologin)
+        //     } else {
+        //         res.send({ result: "no user found" })
+        //     }
+        // }
+        // else {
+        //     res.send({ result: "Plzz Enter both fields" })
         }
-    }
-    else {
-        res.send({ result: "Plzz Enter both fields" })
-    }
-})
+    })
+
+
+
+// AdminRouter.post("/login", async (req, res) => {
+//     if (req.body.username && req.body.password) {
+//         let usertologin = await AdminModel.findOne(req.body).select("-password")
+
+//         if (usertologin) {
+//             res.send(usertologin)
+//         } else {
+//             res.send({ result: "no user found" })
+//         }
+//     }
+//     else {
+//         res.send({ result: "Plzz Enter both fields" })
+//     }
+// })
 
 
 export default AdminRouter
