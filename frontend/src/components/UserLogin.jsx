@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './User.css'
-import { useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const UserLogin = () => {
@@ -32,10 +32,12 @@ const UserLogin = () => {
 
   return (
     <div className='user'>
+      <Outlet/>
       <h1>Login</h1>
       <form action="">
         <input type="text" placeholder='Username' value={Username} onChange={(e) => setUsername(e.target.value)} />
         <input type="password" placeholder='Password' value={Password} onChange={(e) => setPassword(e.target.value)} />
+        <Link id='fgtpass' to="Password-reset-User">Forgot Passworrd</Link>
         <div className='login-signup-btn-cont'>
           <button className='signupBtn' onClick={() => navigate("/userSignUp")}>Sign Up</button>
           <button type='submit' className='loginBtn' onClick={(e) => {

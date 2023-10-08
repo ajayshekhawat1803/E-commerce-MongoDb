@@ -18,6 +18,7 @@ import PersonalDetails from './components/User/Profile/PersonalDetails'
 import OtherDetails from './components/User/Profile/OtherDetails'
 import Orders from './components/User/Profile/Orders'
 import AccountSettings from './components/User/Profile/AccountSettings'
+import PasswordResetUSer from './components/User/PasswordResetUSer'
 
 const App = () => {
   return (
@@ -39,15 +40,17 @@ const App = () => {
             <Route path="/profile/" element={<Profile />} >
               <Route path='' element={<PersonalDetails />} />
               <Route path='address' element={<OtherDetails />} />
-              <Route path='orders' element={<Orders/>} />
-              <Route path='setting' element={<AccountSettings/>} />
+              <Route path='orders' element={<Orders />} />
+              <Route path='setting' element={<AccountSettings />} />
             </Route>
 
           </Route>
           <Route path='/' element={<Home />} />
           <Route path='/adminlogin' element={<AdminLogin />} />
           <Route path='/adminSignup' element={<AdminSignup />} />
-          <Route path='/userLogin' element={<UserLogin />} />
+          <Route path='/userLogin/' element={<UserLogin />}>
+            <Route path='Password-reset-User' element={<PasswordResetUSer/>} />
+          </Route>
           <Route path='/userSignUp' element={<UserSignup />} />
         </Routes>
       </BrowserRouter>
