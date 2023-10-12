@@ -22,7 +22,8 @@ const AdminLogin = () => {
       password: AdminPassword
     })
     result = result.data
-    if (result.name) {
+    console.log(result);
+    if (result.admintologin.name) {
       localStorage.setItem("adminData", JSON.stringify(result))
       navigate("/")
     }

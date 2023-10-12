@@ -1,8 +1,11 @@
 import express from "express"
 import AdminModel from "./DB/AdminModel.js";
 import bcrypt from 'bcrypt'
-
+import  Jwt  from "jsonwebtoken";
 const AdminRouter = express.Router();
+
+const secretKey = 'ajay-shekhawat'
+
 
 AdminRouter.post("/register", async (req, res) => {
     let { name, email, username, password } = req.body
@@ -28,8 +31,10 @@ AdminRouter.post("/login", async (req, res) => {
                 console.log(err, result, "ifff wala h");
             }
             else {
-                console.log("Matched");
-                res.send(admintologin)
+                const payload = { username: admintologin.username, _Id: admintologin._id };
+                const token = Jwt.sign(payload, secretKey, { expiresIn: '1h' });
+                // res.cookie('token', token,{httpOnly:true})
+                res.json({admintologin,token});
             }
         });
     }

@@ -1,13 +1,14 @@
 import React from 'react'
 import './Header-footer.css'
-import { Link } from 'react-router-dom'
+import { Link, json } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
   const adminAuth = localStorage.getItem("adminData")
   const userAuth = localStorage.getItem("userData")
   const navigate = useNavigate()
-  // console.log(JSON.parse(adminAuth));
+  
+  // console.log(JSON.parse(adminAuth).token);
   return (
     <header>
       <Link to="/">Home</Link>

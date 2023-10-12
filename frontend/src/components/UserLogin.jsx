@@ -21,18 +21,22 @@ const UserLogin = () => {
       password: Password
     })
     result = result.data
-    if (result.name) {
+    if (result.usertologin.name) {
       localStorage.setItem("userData", JSON.stringify(result))
       navigate("/")
     }
     else {
       alert("Please Enter Correct Detils")
     }
+    console.log(result.token);
+    // if (result.message === "Password Incorrect") {
+    //   alert("Enter valid password")
+    // }
   }
 
   return (
     <div className='user'>
-      <Outlet/>
+      <Outlet />
       <h1>Login</h1>
       <form action="">
         <input type="text" placeholder='Username' value={Username} onChange={(e) => setUsername(e.target.value)} />

@@ -9,11 +9,18 @@ const PasswordResetUSer = () => {
     const [cnfNewPassword, setCnfNewPassword] = useState("")
     const navigate = useNavigate()
 
-    const ResetPass = () => {
-        if (newPassword==cnfNewPassword) {
-            alert("Password Matched")
+    const ResetPass = async () => {
+        if (newPassword == cnfNewPassword) {
+            let result = await axios.post("http://localhost:4000/user/reset-password", {
+                username: username,
+                password: newPassword
+            })
+            if (result.data.modifiedCount) {
+                alert("Password Changed")
+                navigate("/userLogin")
+            }
         }
-        else{
+        else {
             alert("Confirm Password MissMatched")
 
         }
@@ -22,7 +29,7 @@ const PasswordResetUSer = () => {
     return (
         <div className='UsrPassReset'>
             <h1>Password Reset</h1>
-            <input type="text" placeholder='Username' value={username} onChange={(e)=>setUsername(e.target.value)} />
+            <input type="text" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
             <input type="text" placeholder='Enter new Password' value={newPassword} onChange={(e) => setnewPassword(e.target.value)} />
             <input type="text" placeholder='Confirm new Password' value={cnfNewPassword} onChange={(e) => setCnfNewPassword(e.target.value)} />
             <div className='btns-cont'>

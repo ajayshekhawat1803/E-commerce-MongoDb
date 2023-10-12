@@ -11,13 +11,14 @@ const PersonalDetails = () => {
     const navigate = useNavigate()
     
     useEffect(() => {
-        setuserauth(JSON.parse(localStorage.getItem("userData")))
+        setuserauth(JSON.parse(localStorage.getItem("userData")).usertologin)
     }, [])
     useEffect(() => {
         setname(userAuth.name)
         setemail(userAuth.email)
         setdob(userAuth.dob)
         setmobile(userAuth.mobile)
+        // console.log(JSON.parse(localStorage.getItem("userData")).usertologin);
     }, [userAuth])
 
     const savePersonalDetails = async () => {

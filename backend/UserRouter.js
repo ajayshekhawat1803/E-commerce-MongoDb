@@ -1,8 +1,11 @@
 import express from "express"
 import UserModel from "./DB/UserModel.js";
 import bcrypt from 'bcrypt'
+import Jwt from "jsonwebtoken";
 
 const UserRouter = express.Router();
+
+const secretKey = 'ajay-shekhawat'
 
 UserRouter.post("/register", async (req, res) => {
     let { name, email, username, password } = req.body
@@ -24,12 +27,12 @@ UserRouter.post("/login", async (req, res) => {
         let usertologin = await UserModel.findOne({ username: req.body.username })
         bcrypt.compare(req.body.password, usertologin.password, (err, result) => {
             if (err || !result) {
-                res.status(401).json({ message: 'Authentication failed' });
-                console.log(err, result, "ifff wala h");
+                res.json({ message: "Password Incorrect" });
             }
             else {
-                console.log("Matched");
-                res.send(usertologin)
+                const payload = { username: usertologin.username, _Id: usertologin._id };
+                const token = Jwt.sign(payload, secretKey, { expiresIn: '1h' });
+                res.json({ usertologin, token });
             }
         });
     }
@@ -72,7 +75,18 @@ UserRouter.patch("/update/address/:id", async (req, res) => {
 
 
 UserRouter.post("/reset-password", async (req, res) => {
-    console.log(req.body);
+    let { username, password } = req.body
+    let user = await UserModel.findOne({ username: username })
+    bcrypt.hash(password, 10, async (err, hash) => {
+        if (err) {
+            console.error(err);
+            return null
+        }
+        password = hash
+        let result = await UserModel.updateOne({ username: username }, { $set: { password: password } })
+        // console.log(user.password, "new wala updated");
+        res.json(result)
+    })
 })
 
 export default UserRouter

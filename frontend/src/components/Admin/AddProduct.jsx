@@ -9,25 +9,32 @@ const AddProduct = () => {
   const [category, setcategory] = useState("")
   const [company, setcompany] = useState("")
   const [image, setimage] = useState("")
+  const [token, settoken] = useState("")
   const navigate = useNavigate()
+  // let token;
   useEffect(() => {
     const adminauth = localStorage.getItem("adminData");
     if (!adminauth) {
       navigate("/")
     }
+    settoken(JSON.parse(adminauth).token)
   }, [])
+
+  // console.log(token);
 
   const AddProduct = async () => {
     let result = await axios.post("http://localhost:4000/product/add", { name, price, category, company, image },
       {
         headers: {
+          'Authorization': `${token}`,
           'Content-Type': 'multipart/form-data',
         },
       })
-      result=result.data
+    result = result.data
+    console.log(result);
     if (result.name) {
       alert("Product has been added")
-      navigate("/allProducts")
+      // navigate("/allProducts")
     }
 
   }

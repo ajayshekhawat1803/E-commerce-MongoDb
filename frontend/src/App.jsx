@@ -33,23 +33,23 @@ const App = () => {
             <Route path='/delete' element={<h1>Delete Product</h1>} />
             <Route path='/allProducts' element={<AllProducts />} />
           </Route>
+
           <Route element={<UserComponents />}>
             <Route path='/allUserProducts' element={<AllUserProducts />} />
             <Route path='/cart' element={<h1>This is cart</h1>} />
-
             <Route path="/profile/" element={<Profile />} >
               <Route path='' element={<PersonalDetails />} />
               <Route path='address' element={<OtherDetails />} />
               <Route path='orders' element={<Orders />} />
               <Route path='setting' element={<AccountSettings />} />
             </Route>
-
           </Route>
+
           <Route path='/' element={<Home />} />
           <Route path='/adminlogin' element={<AdminLogin />} />
           <Route path='/adminSignup' element={<AdminSignup />} />
           <Route path='/userLogin/' element={<UserLogin />}>
-            <Route path='Password-reset-User' element={<PasswordResetUSer/>} />
+            <Route path='Password-reset-User' element={<PasswordResetUSer />} />
           </Route>
           <Route path='/userSignUp' element={<UserSignup />} />
         </Routes>
