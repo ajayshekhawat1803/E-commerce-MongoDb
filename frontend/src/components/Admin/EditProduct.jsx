@@ -41,14 +41,14 @@ const EditProduct = () => {
             }, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
-            console.log(result);
+            // console.log(result);
         }
         if (!updatedimage) {
             const UpdatedData = { name, price, category, company, image }
             let result = await axios.put(`http://localhost:4000/product/update/${params.id}`, UpdatedData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
-            console.log(result);
+            // console.log(result);
         }
         alert("Product has been Updated")
         navigate("/allProducts")

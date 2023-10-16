@@ -11,7 +11,7 @@ const AddProduct = () => {
   const [image, setimage] = useState("")
   const [token, settoken] = useState("")
   const navigate = useNavigate()
-  // let token;
+
   useEffect(() => {
     const adminauth = localStorage.getItem("adminData");
     if (!adminauth) {
@@ -31,10 +31,14 @@ const AddProduct = () => {
         },
       })
     result = result.data
-    console.log(result);
     if (result.name) {
       alert("Product has been added")
-      // navigate("/allProducts")
+      navigate("/allProducts")
+    }
+    if (result.message=="Token is invalid") {
+      alert("Session Expired !!! \nPlease Login Again....")
+      localStorage.clear()
+      navigate("/adminlogin")
     }
 
   }

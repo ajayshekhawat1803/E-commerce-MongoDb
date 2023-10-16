@@ -37,7 +37,7 @@ const AdminLogin = () => {
       <h1>Admin Login</h1>
       <form action="">
         <input type="text" placeholder='Username' value={AdminUsername} onChange={(e) => setAdminUsername(e.target.value)} />
-        <input type="password" placeholder='Password' value={AdminPassword} onChange={(e) => setAdminPassword(e.target.value)} />
+        <input type="password" placeholder='Password'  value={AdminPassword} onChange={(e) => setAdminPassword(e.target.value)} />
         <div className='login-signup-btn-cont'>
           <button className='signupBtn' onClick={() => navigate("/AdminSignup")}>Sign Up</button>
           <button type='submit' className='loginBtn'

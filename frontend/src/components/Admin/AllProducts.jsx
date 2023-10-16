@@ -5,10 +5,16 @@ import { useNavigate } from 'react-router-dom'
 
 const AllProducts = () => {
   const [allproducts, setallproducts] = useState([])
+  const [token, settoken] = useState("")
   const navigate = useNavigate()
-  
+
   useEffect(() => {
+    const adminauth = localStorage.getItem("adminData");
+    if (!adminauth) {
+      navigate("/")
+    }
     getProducts();
+    settoken(JSON.parse(adminauth).token)
   }, [])
 
   const getProducts = async () => {
@@ -20,10 +26,22 @@ const AllProducts = () => {
     navigate(`/edit/${id}`)
   }
   const HandleDelete = async (id) => {
-    let result = await axios.delete(`http://localhost:4000/product/del/${id}`)
+    let result = await axios.delete(`http://localhost:4000/product/del/${id}`,
+      {
+        headers: {
+          'Authorization': `${token}`
+        },
+      })
+    console.log(result.data);
     if (result.data.acknowledged) {
       alert(`Product with ID: ${id} has been deleted`)
       navigate("/allProducts")
+      window.location.reload()
+    }
+    if (result.data.message=="Token is invalid") {
+      alert("Session Expired !!! \nPlease Login Again....")
+      localStorage.clear()
+      navigate("/adminlogin")
     }
   }
   return (
