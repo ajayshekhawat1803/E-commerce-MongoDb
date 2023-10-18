@@ -5,23 +5,58 @@ import { useNavigate } from 'react-router-dom'
 
 const AllUserProducts = () => {
     const [allproducts, setallproducts] = useState([])
+    const [productstoShow, setproductstoShow] = useState([])
+    const [category, setCategory] = useState("")
     const navigate = useNavigate()
 
     useEffect(() => {
         getProducts();
-    }, [])
-    
+    }, [allproducts])
+
+    useEffect(() => {
+        FilterProducts()
+    }, [category])
+
+    const FilterProducts = () => {
+        console.log(category);
+        let filteredProducts = allproducts.filter((product) => {
+            return product.category == category
+        })
+
+        if (category == "All") {
+            console.log("alll");
+            filteredProducts = allproducts
+        }
+        console.log(filteredProducts);
+        setproductstoShow(filteredProducts)
+        // window.location.reload()
+        setTimeout(() => {
+            console.log(productstoShow);
+        }, 2000);
+    }
+
+
     const getProducts = async () => {
         let response = await axios.get("http://localhost:4000/product/")
         setallproducts(response.data);
+        setproductstoShow(allproducts)
     }
 
     return (
         <div className='allproducts'>
             <h1>All Products</h1>
+            <div className='filtersection'>
+                <span>Category: </span>
+                <select defaultValue="All" onChange={(e) => setCategory(e.target.value)}>
+                    <option value="All" >All</option>
+                    <option value="Mobile">Mobiles</option>
+                    <option value="Laptop">Laptops</option>
+                    <option value="camera">Camera</option>
+                </select>
+            </div>
             <div className='product-cont'>
                 {
-                    allproducts.map((product) => {
+                    productstoShow.map((product) => {
                         return (
                             <div className='product' key={product._id}>
                                 <div className="img-cont">

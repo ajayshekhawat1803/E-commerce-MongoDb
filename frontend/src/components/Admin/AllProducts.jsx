@@ -22,8 +22,16 @@ const AllProducts = () => {
     setallproducts(response.data);
   }
 
-  const HandleEdit = (id) => {
-    navigate(`/edit/${id}`)
+  const HandleEdit = async(id) => {
+    let AuthorizationResult = await axios.get(`http://localhost:4000/product/${token}`)
+    if (AuthorizationResult.status==200) {
+      navigate(`/edit/${id}`)
+    }
+    else{
+      alert("Session Expired \nPlease Login Again...!!!")
+      localStorage.clear()
+      navigate("/adminlogin")
+    }
   }
   const HandleDelete = async (id) => {
     let result = await axios.delete(`http://localhost:4000/product/del/${id}`,
